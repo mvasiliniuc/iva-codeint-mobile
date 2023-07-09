@@ -40,7 +40,6 @@ def setup_logging(args):
         transformers.utils.logging.set_verbosity_error()
     return logger, run_name
 
-
 def create_dataloaders(args):
     ds_kwargs = {"streaming": True}
     train_data = load_dataset(args.dataset_name_train, split="train", **ds_kwargs)
@@ -70,12 +69,10 @@ def get_grouped_params(model, args, no_decay=["bias", "ln_1.weight", "ln_2.weigh
         {"params": params_without_wd, "weight_decay": 0.0},
     ]
 
-
 def log_metrics(step, metrics):
     logger.info(f"Step {step}: {metrics}")
     if accelerator.is_main_process:
         accelerator.log(metrics, step)
-
 
 def compute_tflops(elapsed_time, accelerator, args):
     # TFLOPs formula (from Equation 3 in Section 5.1 of https://arxiv.org/pdf/2104.04473.pdf).
@@ -90,7 +87,6 @@ def compute_tflops(elapsed_time, accelerator, args):
     )
     tflops = flops_per_iteration / (elapsed_time * accelerator.state.num_processes * (10**12))
     return tflops
-
 
 def evaluate(args):
     model.eval()
@@ -155,10 +151,8 @@ lr_scheduler = get_scheduler(
 )
 accelerator.register_for_checkpointing(lr_scheduler)
 
-
 def get_lr():
     return optimizer.param_groups[0]["lr"]
-
 
 # Prepare everything with our `accelerator`.
 model, optimizer, train_dataloader, eval_dataloader = accelerator.prepare(

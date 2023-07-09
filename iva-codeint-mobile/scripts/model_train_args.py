@@ -4,7 +4,7 @@ from typing import Optional
 @dataclass
 class ModelTrainingArguments:
     """
-    Configuration for training model.
+    Configuration for model training.
     """
     model_ckpt: Optional[str] = field(
         default="mvasiliniuc/iva-codeint-kotlin-small", metadata={"help": "Model name or path of model to be trained."}
